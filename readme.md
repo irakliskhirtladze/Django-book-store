@@ -1,4 +1,4 @@
-# Django unchained
+# Django custom user model
 
 ## Description
 This Django project for TBC Academy includes very basic functionality such as Start page,
