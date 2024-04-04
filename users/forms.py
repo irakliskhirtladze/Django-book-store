@@ -3,10 +3,13 @@ from .models import CustomUser
 
 
 class CustomUserCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields.pop('password2')
 
-    class Meta:
+    class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ("email",)
+        fields = ("email", "password1")
 
 
 class CustomUserChangeForm(UserChangeForm):
