@@ -27,15 +27,15 @@ def log_in(request):
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('user_home')
+            return redirect('store_home')
         else:
             messages.error(request, 'Invalid username or password. Please try again.')
     return render(request, 'authentication/login.html')
 
 
 @login_required
-def user_home(request):
-    return render(request, 'authentication/user_home.html')
+def store_home(request):
+    return render(request, 'authentication/store_home.html')
 
 
 def log_out(request):

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book details</title>
+    <style>
+                body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff; /* Changed background color to white */
+        }
+        .container {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #fff;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #fff; /* Changed text color to white */
+            background-color: #007bff; /* Changed button color to blue */
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+
+
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .book {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 200px;
+            text-align: center;
+        }
+        .book img {
+            max-width: 150px;
+            max-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <a href="/store">Back to store</a>
+    <div class="container">
+        <h1>Details</h1>
+    </div>
+    <div class="book-container">
+        <div class="book">
+            {% if book.image %}
+                <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="{{ book.book_name }} Image">
+            {% else %}
+                <p class="no-image">No Image Available</p>
+            {% endif %}
+            <p><strong>Title:</strong> {{book.book_name}}</p>
+            <p><strong>Author:</strong> {{book.author}}</p>
+            <p><strong>Page count:</strong> {{book.page_count}}</p>
+            <p><strong>Category:</strong> {{book.category}}</p>
+            <p><strong>Price:</strong> {{book.price}}</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User page</title>
+    <title>Book store</title>
     <style>
-        body {
+                body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
@@ -39,13 +39,44 @@
         a:hover {
             background-color: #0056b3;
         }
+
+
+        .book-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .book {
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 200px;
+            text-align: center;
+        }
+        .book img {
+            max-width: 150px;
+            max-height: 200px;
+        }
     </style>
 </head>
 <body>
     <a href="/">Sign out</a>
     <div class="container">
-        <h1>Welcome to your profile {{ username }}!</h1>
-        <p>You can play with your Django now</p>
+        <h1>Welcome to our book store!</h1>
+        <p>Check all the titles below</p>
+    </div>
+    <div class="book-container">
+        {% for book in books %}
+        <div class="book">
+            {% if book.image %}
+                <img src="{{ MEDIA_URL }}{{ book.image.url }}" alt="{{ book.book_name }} Image">
+            {% else %}
+                <p class="no-image">No Image Available</p>
+            {% endif %}
+            <p><strong>Title:</strong> {{book.book_name}}</p>
+            <a href = "{% url 'book_details' book.id %}">View Details</a>
+        </div>
+        {% endfor %}
     </div>
 </body>
 </html>
