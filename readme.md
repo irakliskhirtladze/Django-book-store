@@ -18,9 +18,25 @@ The database itself holds a reference to those images.
 - For respective pages I have used simple HTML templates located in 'templates' folder.
 
 ## Usage
-A user on home page sees Two options for registration or login.
+Clone the repo in your local machine and go to the project. Then run in terminal:
+````
+python manage.py migrate
+````
+Then create superuser using:
+````
+python manage.py createsuperuser
+````
+Run server with:
+````
+python manage.py runserver
+````
+and access admin page on - http://127.0.0.1:8000/admin to add books in the store.
+******
+After adding few sample books to store go back to http://127.0.0.1:8000 
 
-In this version a user must log in to access book store, but I plan to remove this requirement shortly.
+Here user on home page sees Two options for registration or login.
+
+In this version a user must log in to access book store (I plan to remove this requirement shortly).
 
 ![homepage](assets/home.png)
 
@@ -39,3 +55,5 @@ To install other requirements run in terminal:
 ````
 pip install -r requirements.txt
 ````
+
+
