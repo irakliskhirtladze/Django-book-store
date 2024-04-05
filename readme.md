@@ -1,6 +1,7 @@
 # Django custom user model
 
 ## Description
+### Nevermind the frontend for now please
 This Django project for TBC Academy represents a virtual book store. 
 It includes a Start page, user registration and login options and a book library.
 
@@ -38,4 +39,3 @@ To install other requirements run in terminal:
 ````
 pip install -r requirements.txt
 ````
-
