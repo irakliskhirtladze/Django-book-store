@@ -1,4 +1,4 @@
-# Django custom user model
+# Django's book store
 
 ## Description
 ### Nevermind the frontend for now please
