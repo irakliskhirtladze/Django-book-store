@@ -1,8 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import CustomUserCreationForm, CustomUserChangeForm
-from .models import CustomUser
+from users.forms import CustomUserCreationForm, CustomUserChangeForm
+from users.models import CustomUser
 
 
 class CustomUserAdmin(UserAdmin):
@@ -22,7 +22,7 @@ class CustomUserAdmin(UserAdmin):
                 "email", "password1", "password2", "is_staff",
                 "is_active", "groups", "user_permissions"
             )}
-        ),
+         ),
     )
     search_fields = ("email",)
     ordering = ("email",)

@@ -2,16 +2,14 @@
 
 ## Description
 ### Nevermind the frontend for now please
-This Django project for TBC Academy represents a virtual book store. 
-It includes a Start page, user registration and login options and a book library.
+- This Django project for TBC Academy represents a virtual book store. 
+It includes a Start page, user registration and login options and a book library, including a cart where user can add
+or remove a book.
+- For testing purposes to add books in a database, a user must have admin privileges.
+- The 'media/images' directory that stores book images when they are added to a database.
+The database itself holds only references to actual images.
 
-In addition to custom model for users, a book model is added in 'store' app.
-
-To add books in database, a user must have admin privileges.
-Soon I may add a feature that will automatically store sample books in DB.
-
-Plus, now there's a 'media/images' directories that stores book images when they are added to a database.
-The database itself holds a reference to those images.
+Other things to note:
 - 'Djangos_book_store' is the project folder.
 - 'users' is an app handling user signup and login processes.
 - 'store' app handles the virtual library.
@@ -42,11 +40,12 @@ In this version a user must log in to access book store (I plan to remove this r
 
 After login user will see a store home page with all available books displayed:
 
-![store-home](assets/storehome.png)
+![store-home](assets/store_home.png)
 
-Each book has option to display more details as shown below:
+Each book has option to display more details, as well as 
+an option to add to cart as shown below:
 
-![homepage](assets/bookdetails.png)
+![cart](assets/cart.png)
 
 ## Requirements
 - Python 3.12

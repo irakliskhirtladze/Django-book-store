@@ -3,7 +3,9 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
-from .managers import CustomUserManager
+from users.managers import CustomUserManager
+
+from store.models import Book
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
@@ -19,3 +21,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+# Create a many-to-many relationship cart model to store items
+class Cart(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book, related_name="cart")
+    total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"Cart for {self.user.email}"

@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book details</title>
     <style>
-                body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #fff; /* Changed background color to white */
+            background-color: #f0f0f0;
         }
         .container {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 20px;
             padding: 20px;
             border-radius: 8px;
             background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #333;
@@ -26,21 +27,6 @@
             color: #666;
             margin-bottom: 20px;
         }
-        a {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #fff; /* Changed text color to white */
-            background-color: #007bff; /* Changed button color to blue */
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        a:hover {
-            background-color: #0056b3;
-        }
-
-
         .book-container {
             display: flex;
             flex-wrap: wrap;
@@ -52,16 +38,48 @@
             border: 1px solid #ccc;
             width: 200px;
             text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .book img {
             max-width: 150px;
             max-height: 200px;
         }
+        .back-to-store {
+            text-align: left;
+            margin: 20px;
+        }
+        .back-to-store a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-to-store a:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <a href="/store">Back to store</a>
+    <div class="back-to-store">
+        <a href="/store">Back to store</a>
+    </div>
     <div class="container">
+        <h4>Signed in as: {{request.user}}</h4>
         <h1>Details</h1>
     </div>
     <div class="book-container">

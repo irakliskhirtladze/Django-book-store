@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book store</title>
     <style>
-                body {
+        body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #fff; /* Changed background color to white */
+            background-color: #f0f0f0;
         }
         .container {
             text-align: center;
-            margin-top: 50px;
+            margin-top: 20px;
             padding: 20px;
             border-radius: 8px;
             background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
             color: #333;
@@ -26,21 +27,6 @@
             color: #666;
             margin-bottom: 20px;
         }
-        a {
-            display: inline-block;
-            margin-bottom: 20px;
-            text-decoration: none;
-            color: #fff; /* Changed text color to white */
-            background-color: #007bff; /* Changed button color to blue */
-            padding: 10px 20px;
-            border-radius: 4px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        a:hover {
-            background-color: #0056b3;
-        }
-
-
         .book-container {
             display: flex;
             flex-wrap: wrap;
@@ -48,20 +34,83 @@
         }
         .book {
             margin: 20px;
-            padding: 10px;
+            padding: 20px;
             border: 1px solid #ccc;
             width: 200px;
             text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .book img {
             max-width: 150px;
             max-height: 200px;
         }
+        .cart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .cart a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .cart a:hover {
+            text-decoration: underline;
+        }
+        .sign-out {
+            position: absolute;
+            top: 10px;
+            left: 10px; /* Changed from right to left */
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .sign-out a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .sign-out a:hover {
+            text-decoration: underline;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <a href="/">Sign out</a>
+    <div class="cart">
+        <a href="{% url 'cart' %}">Cart</a>
+    </div>
+    <div class="sign-out">
+        <a href="/">Sign out</a>
+    </div>
     <div class="container">
+        <h4>Signed in as: {{request.user}}</h4>
         <h1>Welcome to our book store!</h1>
         <p>Check all the titles below</p>
     </div>
@@ -74,7 +123,11 @@
                 <p class="no-image">No Image Available</p>
             {% endif %}
             <p><strong>Title:</strong> {{book.book_name}}</p>
-            <a href = "{% url 'book_details' book.id %}">View Details</a>
+            <a href="{% url 'book_details' book.id %}">View Details</a>
+            <form action="{% url 'add_to_cart' book.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Add to Cart</button>
+            </form>
         </div>
         {% endfor %}
     </div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .back-to-store {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .back-to-store a {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-to-store a:hover {
+            background-color: #0056b3;
+        }
+        h4 {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .book {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+        .book img {
+            max-width: 100px;
+            margin-right: 20px;
+        }
+        .book-details {
+            flex-grow: 1;
+        }
+        .book-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="back-to-store">
+        <a href="/store">Back to store</a>
+    </div>
+    <div class="container">
+        <h4>Signed in as: {{request.user}}</h4>
+        <h1>Your Cart</h1>
+        <h2>Cart total: {{cart.total}}</h2>
+        {% if books_in_cart %}
+            {% for book in books_in_cart %}
+                <div class="book">
+                    <div class="book-details">
+                        {% if book.image %}
+                            <img src="{{ book.image.url }}" alt="{{ book.title }} Image">
+                        {% else %}
+                            <p class="no-image">No Image Available</p>
+                        {% endif %}
+                        <p class="book-title">{{ book.book_name }}</p>
+                        <p><strong>Author:</strong> {{ book.author }}</p>
+                        <p><strong>Page count:</strong> {{book.page_count}}</p>
+                        <p><strong>Category:</strong> {{book.category}}</p>
+                        <p><strong>Price:</strong> {{book.price}}</p>
+                    </div>
+                    <form action="{% url 'remove_from_cart' book.id %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Remove from cart</button>
+                    </form>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
