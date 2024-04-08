@@ -6,15 +6,22 @@ from users.models import Cart
 from decimal import Decimal
 
 
-def get_books(request):
+def store_home(request):
+    print(request.user.is_authenticated)
+    if not request.user.is_authenticated:
+        return redirect('login')
     return render(request, 'store/store_home.html', {'books': Book.objects.all(), 'user': request.user})
 
 
 def get_book(request, book_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     return render(request, 'store/book_details.html', {'book': Book.objects.get(id=book_id)})
 
 
 def add_to_cart(request, book_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     book = Book.objects.get(pk=book_id)
     cart, _ = Cart.objects.get_or_create(user=request.user)
     if book not in cart.books.all():
@@ -28,6 +35,8 @@ def add_to_cart(request, book_id):
 
 
 def remove_from_cart(request, book_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
     book = Book.objects.get(pk=book_id)
     try:
         cart = Cart.objects.get(user=request.user)
@@ -45,6 +54,9 @@ def remove_from_cart(request, book_id):
 
 
 def cart(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+
     try:
         cart = Cart.objects.get(user=request.user)
         books_in_cart = cart.books.all()

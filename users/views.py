@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 from users.forms import CustomUserCreationForm
 
 
@@ -33,11 +32,6 @@ def log_in(request):
     return render(request, 'authentication/login.html')
 
 
-@login_required
-def store_home(request):
-    return render(request, 'authentication/store_home.html')
-
-
 def log_out(request):
     logout(request)
-    return redirect('index')
+    return redirect('home')

@@ -20,11 +20,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('users.urls')),
     path('', include('store.urls')),
+    path('', include("django.contrib.auth.urls")),
 ]
 
 # This ensures the media files are served only in development mode
