@@ -5,7 +5,7 @@ from users.forms import CustomUserCreationForm
 
 
 def index(request):
-    return render(request, 'authentication/home.html')
+    return render(request, 'home.html')
 
 
 def signup(request):
@@ -16,7 +16,7 @@ def signup(request):
             return redirect('login')
     else:
         form = CustomUserCreationForm()
-    return render(request, 'authentication/signup.html', {'form': form})
+    return render(request, 'users/signup.html', {'form': form})
 
 
 def log_in(request):
@@ -29,7 +29,7 @@ def log_in(request):
             return redirect('store_home')
         else:
             messages.error(request, 'Invalid username or password. Please try again.')
-    return render(request, 'authentication/login.html')
+    return render(request, 'users/login.html')
 
 
 def log_out(request):

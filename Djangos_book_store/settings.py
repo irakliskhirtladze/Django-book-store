@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-9m%b!1&16h5j@^k5ubqa#tgenr6^@=j#$92_!t)$0hr9i+x^=q
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # New
 
 
 # Application definition
@@ -57,7 +57,7 @@ ROOT_URLCONF = 'Djangos_book_store.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates'],
+        'DIRS': [BASE_DIR / 'templates'],  # New
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

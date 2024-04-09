@@ -7,7 +7,6 @@ from decimal import Decimal
 
 
 def store_home(request):
-    print(request.user.is_authenticated)
     if not request.user.is_authenticated:
         return redirect('login')
     return render(request, 'store/store_home.html', {'books': Book.objects.all(), 'user': request.user})
@@ -22,6 +21,7 @@ def get_book(request, book_id):
 def add_to_cart(request, book_id):
     if not request.user.is_authenticated:
         return redirect('login')
+
     book = Book.objects.get(pk=book_id)
     cart, _ = Cart.objects.get_or_create(user=request.user)
     if book not in cart.books.all():
@@ -37,11 +37,17 @@ def add_to_cart(request, book_id):
 def remove_from_cart(request, book_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    book = Book.objects.get(pk=book_id)
+
+    try:
+        book = Book.objects.get(pk=book_id)
+    except Book.DoesNotExist:
+        return redirect('store_home')
+
     try:
         cart = Cart.objects.get(user=request.user)
     except Cart.DoesNotExist:
         cart = Cart.objects.create(user=request.user)
+
     if book in cart.books.all():
         cart.books.remove(book)
         cart.total = Decimal(cart.total)
