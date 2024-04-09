@@ -22,6 +22,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
+    class Meta:
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
+
 
 # Create a many-to-many relationship cart model to store items
 class Cart(models.Model):
@@ -31,3 +35,7 @@ class Cart(models.Model):
 
     def __str__(self):
         return f"Cart for {self.user.email}"
+
+    class Meta:
+        verbose_name = _("Cart")
+        verbose_name_plural = _("Carts")
