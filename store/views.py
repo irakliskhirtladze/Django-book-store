@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from django.core.paginator import Paginator
 
 from store.models import Book
 from users.models import Cart
@@ -7,15 +8,26 @@ from decimal import Decimal
 
 
 def store_home(request):
+    """Gets all books and renders store_home.html to show them on different pages"""
     if not request.user.is_authenticated:
         return redirect('login')
-    return render(request, 'store/store_home.html', {'books': Book.objects.all(), 'user': request.user})
+
+    books = Book.objects.all().order_by('book_name')
+    paginator = Paginator(books, 3)
+    page_number = request.GET.get('page', 1)
+    books = paginator.get_page(page_number)
+    return render(request, 'store/store_home.html', {'books': books, 'user': request.user})
 
 
 def get_book(request, book_id):
+    """Obtains details for a specific book and renders book_details.html"""
     if not request.user.is_authenticated:
         return redirect('login')
-    return render(request, 'store/book_details.html', {'book': Book.objects.get(id=book_id)})
+
+    page_number = request.GET.get('page', 1)
+
+    return render(request, 'store/book_details.html',
+                  {'book': Book.objects.get(id=book_id), 'page_number': page_number})
 
 
 def add_to_cart(request, book_id):
@@ -24,6 +36,7 @@ def add_to_cart(request, book_id):
 
     book = Book.objects.get(pk=book_id)
     cart, _ = Cart.objects.get_or_create(user=request.user)
+
     if book not in cart.books.all():
         cart.books.add(book)
         cart.total = Decimal(cart.total)
@@ -31,7 +44,11 @@ def add_to_cart(request, book_id):
         cart.save()
         messages.success(request, f'{book.book_name} added to cart')
 
-    return redirect('store_home')
+    # Get the current page number from the query parameters
+    current_page = request.GET.get('page', 1)
+
+    # Redirect back to the same page with the current page number
+    return redirect(reverse('store_home') + f'?page={current_page}')
 
 
 def remove_from_cart(request, book_id):
@@ -72,5 +89,10 @@ def cart(request):
         books_in_cart = []
         total_items = 0
 
+    page_number = request.GET.get('page', 1)
+
     return render(request, 'store/cart.html',
-                  {'cart': cart, 'books_in_cart': books_in_cart, 'total_items': total_items})
+                  {'cart': cart,
+                   'books_in_cart': books_in_cart,
+                   'total_items': total_items,
+                   'page_number': page_number})

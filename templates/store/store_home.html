@@ -100,11 +100,26 @@
         button:hover {
             background-color: #0056b3;
         }
+        .pagination-link {
+            color: #007bff; /* Blue color for links */
+            text-decoration: none; /* Remove underline */
+            margin-right: 10px; /* Add spacing between links */
+            font-weight: bold; /* Make the text bold */
+        }
+
+        .pagination-link:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        .page-info {
+            font-size: 14px; /* Reduce font size */
+            color: #666; /* Gray color for page info */
+        }
     </style>
 </head>
 <body>
     <div class="cart">
-        <a href="{% url 'cart' %}">Cart</a>
+        <a href="{% url 'cart' %}?page={{books.number}}">Cart</a>
     </div>
     <div class="sign-out">
         <form action="{% url 'logout' %}" method="post">
@@ -117,6 +132,8 @@
         <h1>Welcome to our book store!</h1>
         <p>Check all the titles below</p>
     </div>
+
+<!--    Book container-->
     <div class="book-container">
         {% for book in books %}
         <div class="book">
@@ -126,13 +143,33 @@
                 <p class="no-image">No Image Available</p>
             {% endif %}
             <p><strong>Title:</strong> {{book.book_name}}</p>
-            <a href="{% url 'book_details' book.id %}">View Details</a>
-            <form action="{% url 'add_to_cart' book.id %}" method="post">
+            <a href="{% url 'book_details' book.id %}?page={{books.number}}">View Details</a>
+            <form action="{% url 'add_to_cart' book.id %}?page={{books.number}}" method="post">
                 {% csrf_token %}
                 <button type="submit">Add to Cart</button>
             </form>
         </div>
         {% endfor %}
     </div>
+
+<!--    Pagination-->
+    <br>
+        <!-- Previous and first links -->
+        {% if books.has_previous %}
+            <a class="pagination-link" href="?page=1">&laquo; First</a>
+            <a class="pagination-link" href="?page={{ books.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <!-- Next and last links -->
+        {% if books.has_next %}
+            <a class="pagination-link" href="?page={{ books.next_page_number }}">Next</a>
+            <a class="pagination-link" href="?page={{ books.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+
+        <br><br>
+        <!-- Page information -->
+        <span class="page-info">Page {{ books.number }} of {{ books.paginator.num_pages }}</span>
+
+
 </body>
 </html>
