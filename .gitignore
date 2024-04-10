@@ -1,7 +1,2 @@
 __pycache__/
-db.sqlite3
 .idea/
-
-# Ignoring content in images folder but not the folder itself
-media/images/*
-!media/images/
