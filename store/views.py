@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
 from django.core.paginator import Paginator
 
@@ -26,8 +26,14 @@ def get_book(request, book_id):
 
     page_number = request.GET.get('page', 1)
 
+    # Get the book from the database or show a 404 page if it doesn't exist
+    try:
+        book = get_object_or_404(Book, pk=book_id)
+    except Exception:
+        return render(request, '404.html')
+
     return render(request, 'store/book_details.html',
-                  {'book': Book.objects.get(id=book_id), 'page_number': page_number})
+                  {'book': book, 'page_number': page_number})
 
 
 def add_to_cart(request, book_id):
