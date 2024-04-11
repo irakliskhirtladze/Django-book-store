@@ -1,11 +1,12 @@
 # Django's book store
+See the project at https://salty-bayou-97584-4dd3a5db57af.herokuapp.com/
 
 ## Description
 - This Django project for TBC Academy represents a virtual book store. 
 It includes a Start page, user registration and login options and a book library, including a cart where user can add
 or remove a book.
 - For testing purposes to add books in a database, a user must have admin privileges.
-- The 'media/images' directory that stores book images when they are added to a database.
+- The 'media/images' directory stores book images when they are added to a database.
 The database itself holds only references to actual images.
 
 Other things to note:
