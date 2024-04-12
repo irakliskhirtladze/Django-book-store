@@ -13,7 +13,7 @@
         }
         .container {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 0px;
             padding: 20px;
             border-radius: 8px;
             background-color: #fff;
@@ -100,21 +100,7 @@
         button:hover {
             background-color: #0056b3;
         }
-        /*.pagination-link {*/
-        /*    color: #007bff; !* Blue color for links *!*/
-        /*    text-decoration: none; !* Remove underline *!*/
-        /*    margin-right: 10px; !* Add spacing between links *!*/
-        /*    font-weight: bold; !* Make the text bold *!*/
-        /*}*/
 
-        /*.pagination-link:hover {*/
-        /*    text-decoration: underline; !* Underline on hover *!*/
-        /*}*/
-
-        /*.page-info {*/
-        /*    font-size: 14px; !* Reduce font size *!*/
-        /*    color: #666; !* Gray color for page info *!*/
-        /*}*/
     </style>
 </head>
 <body>
@@ -183,7 +169,6 @@
     <!-- Page information -->
     <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
 </div>
-
-
 </body>
 </html>
+

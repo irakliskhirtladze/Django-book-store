@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Title Here</title>
+    <style>
+        /* Your custom CSS styles */
+        body {
+            margin: 0;
+            padding-bottom: 50px; /* Ensure space for footer */
+            font-family: Arial, sans-serif;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #f0f0f0; /* Light grey background */
+            color: #333; /* Dark text color */
+            padding: 20px 0;
+            text-align: right;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Add shadow effect */
+        }
+
+        .footer p {
+            margin: 0;
+        }
+
+        .footer a {
+            color: #007bff; /* Link color */
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Your header content goes here -->
+    {% block content %}{% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8"></div> <!-- Empty column to push content to right -->
+                <div class="col-md-4">
+                    <p>Created by Irakli Skhirtladze</p>
+                    <p>Contact us at - <a href="mailto:iskhirtladzei@gmail.com">iskhirtladzei@gmail.com</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+</body>
+</html>
