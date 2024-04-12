@@ -1,22 +1,51 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib import messages
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, EmptyPage
+from django.views.generic import ListView
 
 from store.models import Book
 from users.models import Cart
 from decimal import Decimal
 
 
-def store_home(request):
-    """Gets all books and renders store_home.html to show them on different pages"""
-    if not request.user.is_authenticated:
-        return redirect('login')
+class BookPaginator(Paginator):
+    """Handles pagination for numbers greater or lesser than min and max number of pages.
+    For example, if N of pages is 5, and user tries to get page 6, it will return the last page."""
+    def validate_number(self, number):
+        try:
+            return super().validate_number(number)
+        except EmptyPage:
+            if int(number) > 1:
+                # return the last page
+                return self.num_pages
+            elif int(number) < 1:
+                # return the first page
+                return 1
+            else:
+                raise
 
-    books = Book.objects.all().order_by('book_name')
-    paginator = Paginator(books, 3)
-    page_number = request.GET.get('page', 1)
-    books = paginator.get_page(page_number)
-    return render(request, 'store/store_home.html', {'books': books, 'user': request.user})
+
+class StoreHome(ListView):
+    """Class representing a list of all books in the store, with pagination"""
+    model = Book
+    template_name = 'store/store_home.html'
+    paginate_by = 3
+    context_object_name = 'books'
+    ordering = 'book_name'
+    paginator_class = BookPaginator
+
+    def get_queryset(self):
+        return super().get_queryset().order_by(self.ordering)
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('login')
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = self.request.user
+        return context
 
 
 def get_book(request, book_id):
@@ -37,6 +66,7 @@ def get_book(request, book_id):
 
 
 def add_to_cart(request, book_id):
+    """Adds a book to the user's cart"""
     if not request.user.is_authenticated:
         return redirect('login')
 

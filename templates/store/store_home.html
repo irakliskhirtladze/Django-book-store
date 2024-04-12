@@ -100,26 +100,26 @@
         button:hover {
             background-color: #0056b3;
         }
-        .pagination-link {
-            color: #007bff; /* Blue color for links */
-            text-decoration: none; /* Remove underline */
-            margin-right: 10px; /* Add spacing between links */
-            font-weight: bold; /* Make the text bold */
-        }
+        /*.pagination-link {*/
+        /*    color: #007bff; !* Blue color for links *!*/
+        /*    text-decoration: none; !* Remove underline *!*/
+        /*    margin-right: 10px; !* Add spacing between links *!*/
+        /*    font-weight: bold; !* Make the text bold *!*/
+        /*}*/
 
-        .pagination-link:hover {
-            text-decoration: underline; /* Underline on hover */
-        }
+        /*.pagination-link:hover {*/
+        /*    text-decoration: underline; !* Underline on hover *!*/
+        /*}*/
 
-        .page-info {
-            font-size: 14px; /* Reduce font size */
-            color: #666; /* Gray color for page info */
-        }
+        /*.page-info {*/
+        /*    font-size: 14px; !* Reduce font size *!*/
+        /*    color: #666; !* Gray color for page info *!*/
+        /*}*/
     </style>
 </head>
 <body>
     <div class="cart">
-        <a href="{% url 'cart' %}?page={{books.number}}">Cart</a>
+        <a href="{% url 'cart' %}?page={{page_obj.number}}">Cart</a>
     </div>
     <div class="sign-out">
         <form action="{% url 'logout' %}" method="post">
@@ -143,8 +143,8 @@
                 <p class="no-image">No Image Available</p>
             {% endif %}
             <p><strong>Title:</strong> {{book.book_name}}</p>
-            <a href="{% url 'book_details' book.id %}?page={{books.number}}">View Details</a>
-            <form action="{% url 'add_to_cart' book.id %}?page={{books.number}}" method="post">
+            <a href="{% url 'book_details' book.id %}?page={{page_obj.number}}">View Details</a>
+            <form action="{% url 'add_to_cart' book.id %}?page={{page_obj.number}}" method="post">
                 {% csrf_token %}
                 <button type="submit">Add to Cart</button>
             </form>
@@ -152,23 +152,37 @@
         {% endfor %}
     </div>
 
-<!--    Pagination-->
-    <br>
-        <!-- Previous and first links -->
-        {% if books.has_previous %}
-            <a class="pagination-link" href="?page=1">&laquo; First</a>
-            <a class="pagination-link" href="?page={{ books.previous_page_number }}">Previous</a>
-        {% endif %}
 
-        <!-- Next and last links -->
-        {% if books.has_next %}
-            <a class="pagination-link" href="?page={{ books.next_page_number }}">Next</a>
-            <a class="pagination-link" href="?page={{ books.paginator.num_pages }}">Last &raquo;</a>
-        {% endif %}
+ <!-- Pagination Links -->
+<div class="pagination" style="text-align: center; margin-top: 20px;">
+    <!-- Previous and first links -->
+    {% if page_obj.has_previous %}
+        <a class="pagination-link" href="?page=1">&laquo; First</a>
+        <span style="margin: 0 10px;">|</span>
+        <a class="pagination-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% else %}
+        <span class="pagination-link" style="color: #999;">&laquo; First</span>
+        <span style="margin: 0 10px;">|</span>
+        <span class="pagination-link" style="color: #999;">Previous</span>
+    {% endif %}
 
-        <br><br>
-        <!-- Page information -->
-        <span class="page-info">Page {{ books.number }} of {{ books.paginator.num_pages }}</span>
+    <!-- Next and last links -->
+    {% if page_obj.has_next %}
+        <span style="margin: 0 10px;">|</span>
+        <a class="pagination-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <span style="margin: 0 10px;">|</span>
+        <a class="pagination-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+    {% else %}
+        <span style="margin: 0 10px;">|</span>
+        <span class="pagination-link" style="color: #999;">Next</span>
+        <span style="margin: 0 10px;">|</span>
+        <span class="pagination-link" style="color: #999;">Last &raquo;</span>
+    {% endif %}
+
+    <br><br>
+    <!-- Page information -->
+    <span class="page-info">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+</div>
 
 
 </body>

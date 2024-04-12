@@ -27,8 +27,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _("Users")
 
 
-# Create a many-to-many relationship cart model to store items
 class Cart(models.Model):
+    """Create a cart that will store user-chosen books.
+    Also creates many-to-many relationship with Book model"""
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, verbose_name=_("User"))
     books = models.ManyToManyField(Book, related_name="cart", verbose_name=_("Books"))
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, verbose_name=_("Total"))
