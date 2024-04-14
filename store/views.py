@@ -40,9 +40,9 @@ class StoreHome(ListView):
         author_id = self.request.GET.get('author')
         category_id = self.request.GET.get('category')
 
-        if author_id.isnumeric():
+        if author_id is not None and author_id.isnumeric():
             queryset = queryset.filter(author_id=author_id)
-        if category_id.isnumeric():
+        if category_id is not None and category_id.isnumeric():
             queryset = queryset.filter(category__id=category_id)
 
         return queryset
