@@ -92,7 +92,11 @@
             <p><strong>Title:</strong> {{book.book_name}}</p>
             <p><strong>Author:</strong> {{book.author}}</p>
             <p><strong>Page count:</strong> {{book.page_count}}</p>
-            <p><strong>Category:</strong> {{book.category}}</p>
+            <p><strong>Category:</strong>
+                {% for category in book.category.all %}
+                    {{ category.category_name }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
             <p><strong>Price:</strong> {{book.price}}</p>
         </div>
     </div>

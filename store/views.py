@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator, EmptyPage
 from django.views.generic import ListView
 
-from store.models import Book
+from store.models import Book, Author, Category
 from users.models import Cart
 from decimal import Decimal
 
@@ -35,7 +35,17 @@ class StoreHome(ListView):
     paginator_class = BookPaginator
 
     def get_queryset(self):
-        return super().get_queryset().order_by(self.ordering)
+        queryset = super().get_queryset().order_by(self.ordering)
+        # Gets query parameters for filtering
+        author_id = self.request.GET.get('author')
+        category_id = self.request.GET.get('category')
+
+        if author_id.isnumeric():
+            queryset = queryset.filter(author_id=author_id)
+        if category_id.isnumeric():
+            queryset = queryset.filter(category__id=category_id)
+
+        return queryset
 
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -45,6 +55,9 @@ class StoreHome(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
+        context['authors'] = Author.objects.all()  # Get all authors
+        context['categories'] = Category.objects.all()  # Get all categories
+
         return context
 
 

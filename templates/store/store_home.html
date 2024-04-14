@@ -101,9 +101,37 @@
             background-color: #0056b3;
         }
 
+        /*Fileter styles*/
+        .filter-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .filter-container select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin: 0 10px;
+        }
+
+        .filter-container button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .filter-container button:hover {
+            background-color: #0056b3;
+        }
+
     </style>
 </head>
 <body>
+
     <div class="cart">
         <a href="{% url 'cart' %}?page={{page_obj.number}}">Cart</a>
     </div>
@@ -113,10 +141,36 @@
             <button type="submit">Logout</button>
         </form>
     </div>
+
     <div class="container">
         <h4>Signed in as: {{request.user}}</h4>
         <h1>Welcome to our book store!</h1>
         <p>Check all the titles below</p>
+    </div>
+
+    <!-- Filter container -->
+    <div class="filter-container">
+        <form method="get" action="{% url 'store_home' %}">
+            <label for="author">Author:</label>
+            <select name="author" id="author">
+                <option value="">All Authors</option>
+                <!-- Loop through authors and display them as options -->
+                {% for author in authors %}
+                    <option value="{{ author.id }}">{{ author.author_name }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="category">Category:</label>
+            <select name="category" id="category">
+                <option value="">All Categories</option>
+                <!-- Loop through categories and display them as options -->
+                {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.category_name }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Apply Filter</button>
+        </form>
     </div>
 
 <!--    Book container-->
