@@ -1,5 +1,4 @@
 # Django's book store
-See the project live at https://salty-bayou-97584-4dd3a5db57af.herokuapp.com/
 
 ## Description
 - This Django project for TBC Academy represents a virtual book store. 

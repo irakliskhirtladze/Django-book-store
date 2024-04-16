@@ -83,7 +83,11 @@ def add_to_cart(request, book_id):
     if not request.user.is_authenticated:
         return redirect('login')
 
-    book = Book.objects.get(pk=book_id)
+    try:
+        book = Book.objects.get(pk=book_id)
+    except Exception:
+        return render(request, '404.html')
+
     cart, _ = Cart.objects.get_or_create(user=request.user)
 
     if book not in cart.books.all():
